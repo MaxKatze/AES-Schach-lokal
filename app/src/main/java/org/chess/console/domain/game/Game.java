@@ -97,11 +97,11 @@ public class Game {
      * Enforces domain invariant: cannot resign if game is already over.
      *
      * @param color the color of the resigning player
-     * @throws IllegalStateException if the game is already over
+     * @throws IllegalStateException if the game is already over (with domain error code context)
      */
     public void resign(PieceColor color) {
         if (isOver()) {
-            throw new IllegalStateException("Das Spiel ist bereits beendet.");
+            throw new IllegalStateException("GAME_ALREADY_OVER");
         }
         status = GameStatus.RESIGNED;
         activeColor = color.opposite();

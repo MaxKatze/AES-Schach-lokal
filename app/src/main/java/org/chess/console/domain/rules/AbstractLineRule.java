@@ -1,5 +1,7 @@
 package org.chess.console.domain.rules;
 
+import org.chess.console.domain.exceptions.DomainErrorCode;
+
 /**
  * Base for rules that move along rays (rook, bishop, queen).
  */
@@ -12,7 +14,7 @@ public abstract class AbstractLineRule implements MoveRule {
         int deltaRank = move.from().deltaRank(move.to());
 
         if (!supportsDirection(deltaFile, deltaRank)) {
-            return MoveValidationResult.illegal("Ungültige Richtung für " + supports());
+            return MoveValidationResult.illegal(DomainErrorCode.INVALID_DIRECTION_FOR_PIECE, supports());
         }
 
         int stepFile = Integer.compare(deltaFile, 0);
@@ -20,7 +22,7 @@ public abstract class AbstractLineRule implements MoveRule {
 
         boolean pathClear = BoardNavigator.isPathClear(context.board(), move.from(), move.to(), stepFile, stepRank);
         if (!pathClear) {
-            return MoveValidationResult.illegal("Der Weg ist blockiert");
+            return MoveValidationResult.illegal(DomainErrorCode.PATH_BLOCKED);
         }
         return MoveValidationResult.SUCCESS;
     }

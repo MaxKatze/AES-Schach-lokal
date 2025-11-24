@@ -1,6 +1,8 @@
 package org.chess.console.application;
 
+import org.chess.console.application.messages.ApplicationMessages;
 import org.chess.console.domain.board.Board;
+import org.chess.console.domain.exceptions.DomainErrorCode;
 import org.chess.console.domain.game.Game;
 import org.chess.console.domain.move.Move;
 import org.chess.console.domain.move.MoveRecord;
@@ -33,36 +35,39 @@ public class MoveCoordinator {
     public MoveEvaluation execute(Game game, Move move) {
         // Guard clause: prevent moves after game has ended
         if (game.isOver()) {
-            return MoveEvaluation.failure("Das Spiel ist beendet. Verwenden Sie 'restart' für eine neue Partie.");
+            return MoveEvaluation.failure(ApplicationMessages.GAME_OVER_USE_RESTART);
         }
 
         var board = game.board();
         var movingPiece = board.getPiece(move.from()).orElse(null);
         if (movingPiece == null) {
-            return MoveEvaluation.failure("Auf dem Startfeld steht keine Figur");
+            return MoveEvaluation.failure(ApplicationMessages.NO_PIECE_ON_START_SQUARE);
         }
         if (movingPiece.color() != game.activeColor()) {
-            return MoveEvaluation.failure("Spieler " + game.activePlayer().name() + " ist am Zug");
+            return MoveEvaluation.failure(
+                    ApplicationMessages.getMessage(DomainErrorCode.WRONG_PLAYER_TURN, game.activePlayer().name()));
         }
         if (move.from().equals(move.to())) {
-            return MoveEvaluation.failure("Start- und Zielfeld müssen verschieden sein");
+            return MoveEvaluation.failure(ApplicationMessages.SAME_START_AND_TARGET);
         }
 
         Piece targetPiece = board.getPiece(move.to()).orElse(null);
         if (targetPiece != null && targetPiece.color() == movingPiece.color()) {
-            return MoveEvaluation.failure("Eigene Figuren können nicht überschrieben werden");
+            return MoveEvaluation.failure(ApplicationMessages.CANNOT_CAPTURE_OWN_PIECE);
         }
 
         var ruleResult = ruleBook.validate(board, move, movingPiece, targetPiece);
         if (!ruleResult.legal()) {
-            return MoveEvaluation.failure(ruleResult.message());
+            // Translate domain error code to user message
+            DomainErrorCode errorCode = ruleResult.errorCode().orElse(DomainErrorCode.NO_RULES_FOR_PIECE_TYPE);
+            return MoveEvaluation.failure(ApplicationMessages.getMessage(errorCode, ruleResult.errorArgs()));
         }
 
         Piece replacement = determineReplacement(movingPiece, move);
         Board sandbox = board.copy();
         sandbox.move(move.from(), move.to(), replacement);
         if (checkInspector.isKingInCheck(sandbox, movingPiece.color())) {
-            return MoveEvaluation.failure("Zug lässt eigenen König im Schach");
+            return MoveEvaluation.failure(ApplicationMessages.MOVE_LEAVES_KING_IN_CHECK);
         }
 
         board.move(move.from(), move.to(), replacement);

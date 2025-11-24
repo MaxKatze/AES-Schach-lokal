@@ -1,5 +1,6 @@
 package org.chess.console.application;
 
+import org.chess.console.application.messages.ApplicationMessages;
 import org.chess.console.domain.board.Position;
 import org.chess.console.domain.game.Game;
 import org.chess.console.domain.game.GameFactory;
@@ -125,7 +126,7 @@ class GameServiceTest {
             service.resign(PieceColor.WHITE);
         });
 
-        assertTrue(exception.getMessage().contains("beendet"));
+        assertEquals(ApplicationMessages.GAME_OVER_USE_RESTART, exception.getMessage());
     }
 
     @Test

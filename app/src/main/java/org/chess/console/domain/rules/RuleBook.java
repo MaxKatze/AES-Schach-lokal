@@ -1,6 +1,7 @@
 package org.chess.console.domain.rules;
 
 import org.chess.console.domain.board.Board;
+import org.chess.console.domain.exceptions.DomainErrorCode;
 import org.chess.console.domain.move.Move;
 import org.chess.console.domain.piece.Piece;
 import org.chess.console.domain.piece.PieceType;
@@ -22,7 +23,7 @@ public final class RuleBook {
     public MoveValidationResult validate(Board board, Move move, Piece movingPiece, Piece targetPiece) {
         MoveRule rule = rules.get(movingPiece.type());
         if (rule == null) {
-            return MoveValidationResult.illegal("Keine Regeln für " + movingPiece.type());
+            return MoveValidationResult.illegal(DomainErrorCode.NO_RULES_FOR_PIECE_TYPE, movingPiece.type());
         }
         return rule.validate(new RuleContext(board, move, movingPiece, targetPiece));
     }

@@ -1,6 +1,7 @@
 package org.chess.console.domain.rules;
 
 import org.chess.console.domain.board.Position;
+import org.chess.console.domain.exceptions.DomainErrorCode;
 import org.chess.console.domain.piece.PieceColor;
 import org.chess.console.domain.piece.PieceType;
 
@@ -24,29 +25,29 @@ public final class PawnMoveRule implements MoveRule {
         boolean captureMove = Math.abs(deltaFile) == 1 && deltaRank == direction;
 
         if (!(forwardMove || doubleMove || captureMove)) {
-            return MoveValidationResult.illegal("Der Bauer darf nur vorwärts ziehen");
+            return MoveValidationResult.illegal(DomainErrorCode.PAWN_MUST_MOVE_FORWARD);
         }
 
         if (forwardMove && context.targetPiece() != null) {
-            return MoveValidationResult.illegal("Vorwärtszüge sind nur auf freie Felder erlaubt");
+            return MoveValidationResult.illegal(DomainErrorCode.PAWN_FORWARD_MOVE_BLOCKED);
         }
 
         if (doubleMove) {
             Position mid = Position.of(move.from().file(), move.from().rank() + direction);
             if (context.board().getPiece(mid).isPresent() || context.targetPiece() != null) {
-                return MoveValidationResult.illegal("Doppelzug blockiert");
+                return MoveValidationResult.illegal(DomainErrorCode.PAWN_DOUBLE_MOVE_BLOCKED);
             }
         }
 
         if (captureMove) {
             if (context.targetPiece() == null) {
-                return MoveValidationResult.illegal("Schlagzüge benötigen eine gegnerische Figur");
+                return MoveValidationResult.illegal(DomainErrorCode.PAWN_CAPTURE_REQUIRES_OPPONENT);
             }
             if (context.targetPiece().color() == piece.color()) {
-                return MoveValidationResult.illegal("Eigene Figuren können nicht geschlagen werden");
+                return MoveValidationResult.illegal(DomainErrorCode.PAWN_CANNOT_CAPTURE_OWN_PIECE);
             }
         } else if (context.targetPiece() != null) {
-            return MoveValidationResult.illegal("Baurn dürfen nicht ohne Diagonale schlagen");
+            return MoveValidationResult.illegal(DomainErrorCode.PAWN_CANNOT_CAPTURE_WITHOUT_DIAGONAL);
         }
 
         return MoveValidationResult.SUCCESS;

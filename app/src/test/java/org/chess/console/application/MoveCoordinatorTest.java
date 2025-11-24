@@ -1,5 +1,6 @@
 package org.chess.console.application;
 
+import org.chess.console.application.messages.ApplicationMessages;
 import org.chess.console.domain.board.Board;
 import org.chess.console.domain.board.Position;
 import org.chess.console.domain.game.Game;
@@ -52,7 +53,7 @@ class MoveCoordinatorTest {
         ));
 
         assertFalse(result.success());
-        assertEquals("Zug lässt eigenen König im Schach", result.message());
+        assertEquals(ApplicationMessages.MOVE_LEAVES_KING_IN_CHECK, result.message());
         assertTrue(game.board().getPiece(Position.fromNotation("e2")).isPresent());
     }
 
@@ -84,7 +85,7 @@ class MoveCoordinatorTest {
         ));
 
         assertFalse(result.success());
-        assertTrue(result.message().contains("beendet"));
+        assertEquals(ApplicationMessages.GAME_OVER_USE_RESTART, result.message());
     }
 
     @Test
@@ -98,7 +99,7 @@ class MoveCoordinatorTest {
         ));
 
         assertFalse(result.success());
-        assertTrue(result.message().contains("beendet"));
+        assertEquals(ApplicationMessages.GAME_OVER_USE_RESTART, result.message());
     }
 }
 

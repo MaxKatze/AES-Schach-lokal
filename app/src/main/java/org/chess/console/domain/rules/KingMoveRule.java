@@ -1,5 +1,6 @@
 package org.chess.console.domain.rules;
 
+import org.chess.console.domain.exceptions.DomainErrorCode;
 import org.chess.console.domain.piece.PieceType;
 
 public final class KingMoveRule implements MoveRule {
@@ -17,7 +18,7 @@ public final class KingMoveRule implements MoveRule {
         if (deltaFile <= 1 && deltaRank <= 1 && (deltaFile + deltaRank > 0)) {
             return MoveValidationResult.SUCCESS;
         }
-        return MoveValidationResult.illegal("Der König bewegt sich nur ein Feld");
+        return MoveValidationResult.illegal(DomainErrorCode.KING_MOVES_ONE_SQUARE_ONLY);
     }
 }
 

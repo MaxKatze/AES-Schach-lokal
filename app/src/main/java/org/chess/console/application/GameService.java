@@ -1,5 +1,6 @@
 package org.chess.console.application;
 
+import org.chess.console.application.messages.ApplicationMessages;
 import org.chess.console.domain.game.Game;
 import org.chess.console.domain.game.GameFactory;
 import org.chess.console.domain.move.Move;
@@ -63,7 +64,7 @@ public class GameService {
     public void resign(PieceColor color) {
         Game game = activeGame().orElseThrow(() -> new IllegalStateException("Keine aktive Partie"));
         if (game.isOver()) {
-            throw new IllegalStateException("Das Spiel ist bereits beendet. Verwenden Sie 'restart' für eine neue Partie.");
+            throw new IllegalStateException(ApplicationMessages.GAME_OVER_USE_RESTART);
         }
         turnManager.resign(game, color);
         repository.save(game);
