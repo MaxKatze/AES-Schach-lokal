@@ -31,6 +31,11 @@ public class MoveCoordinator {
     }
 
     public MoveEvaluation execute(Game game, Move move) {
+        // Guard clause: prevent moves after game has ended
+        if (game.isOver()) {
+            return MoveEvaluation.failure("Das Spiel ist beendet. Verwenden Sie 'restart' für eine neue Partie.");
+        }
+
         var board = game.board();
         var movingPiece = board.getPiece(move.from()).orElse(null);
         if (movingPiece == null) {
@@ -96,6 +101,7 @@ public class MoveCoordinator {
         MoveRecord record = new MoveRecord(
                 game.turnNumber(),
                 piece.type(),
+                piece.color(),
                 move,
                 capture,
                 check,

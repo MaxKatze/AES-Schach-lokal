@@ -92,9 +92,32 @@ public class Game {
         return history.size() + 1;
     }
 
+    /**
+     * Records a resignation by the specified player.
+     * Enforces domain invariant: cannot resign if game is already over.
+     *
+     * @param color the color of the resigning player
+     * @throws IllegalStateException if the game is already over
+     */
     public void resign(PieceColor color) {
+        if (isOver()) {
+            throw new IllegalStateException("Das Spiel ist bereits beendet.");
+        }
         status = GameStatus.RESIGNED;
         activeColor = color.opposite();
+    }
+
+    /**
+     * Checks if the game has ended (checkmate, resignation, stalemate, or draw).
+     * This is a domain invariant that prevents moves after game termination.
+     *
+     * @return true if the game is over, false otherwise
+     */
+    public boolean isOver() {
+        return status == GameStatus.CHECKMATE
+                || status == GameStatus.RESIGNED
+                || status == GameStatus.STALEMATE
+                || status == GameStatus.DRAWN;
     }
 }
 

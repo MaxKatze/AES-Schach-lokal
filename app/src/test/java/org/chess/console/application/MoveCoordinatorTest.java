@@ -4,6 +4,7 @@ import org.chess.console.domain.board.Board;
 import org.chess.console.domain.board.Position;
 import org.chess.console.domain.game.Game;
 import org.chess.console.domain.game.GameFactory;
+import org.chess.console.domain.game.GameStatus;
 import org.chess.console.domain.move.Move;
 import org.chess.console.domain.piece.King;
 import org.chess.console.domain.piece.PieceColor;
@@ -70,6 +71,34 @@ class MoveCoordinatorTest {
         );
         game.start();
         return game;
+    }
+
+    @Test
+    void rejectsMoveWhenGameIsCheckmate() {
+        Game game = factory.create("White", "Black");
+        game.flagStatus(GameStatus.CHECKMATE);
+
+        var result = coordinator.execute(game, new Move(
+                Position.fromNotation("e2"),
+                Position.fromNotation("e4")
+        ));
+
+        assertFalse(result.success());
+        assertTrue(result.message().contains("beendet"));
+    }
+
+    @Test
+    void rejectsMoveWhenGameIsResigned() {
+        Game game = factory.create("White", "Black");
+        game.flagStatus(GameStatus.RESIGNED);
+
+        var result = coordinator.execute(game, new Move(
+                Position.fromNotation("e2"),
+                Position.fromNotation("e4")
+        ));
+
+        assertFalse(result.success());
+        assertTrue(result.message().contains("beendet"));
     }
 }
 

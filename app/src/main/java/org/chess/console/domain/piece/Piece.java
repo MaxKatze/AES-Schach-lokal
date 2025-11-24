@@ -36,7 +36,7 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return color.name().charAt(0) + type.getSymbol();
+        return color.name().charAt(0) + type.getSymbol(color);
     }
 }
 

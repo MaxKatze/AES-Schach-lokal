@@ -3,6 +3,7 @@ package org.chess.console.application;
 import org.chess.console.domain.board.Position;
 import org.chess.console.domain.game.Game;
 import org.chess.console.domain.game.GameFactory;
+import org.chess.console.domain.game.GameStatus;
 import org.chess.console.domain.move.Move;
 import org.chess.console.domain.piece.Pawn;
 import org.chess.console.domain.piece.PieceColor;
@@ -112,6 +113,31 @@ class GameServiceTest {
             }
             return nextResult;
         }
+    }
+
+    @Test
+    void resignThrowsExceptionWhenGameIsAlreadyOver() {
+        service.startNewGame("Anna", "Bert");
+        Game game = service.activeGame().orElseThrow();
+        game.flagStatus(GameStatus.CHECKMATE);
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            service.resign(PieceColor.WHITE);
+        });
+
+        assertTrue(exception.getMessage().contains("beendet"));
+    }
+
+    @Test
+    void resignSucceedsWhenGameIsInProgress() {
+        service.startNewGame("Anna", "Bert");
+
+        assertDoesNotThrow(() -> {
+            service.resign(PieceColor.WHITE);
+        });
+
+        Game game = service.activeGame().orElseThrow();
+        assertEquals(GameStatus.RESIGNED, game.status());
     }
 }
 

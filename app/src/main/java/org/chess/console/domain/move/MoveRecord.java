@@ -1,5 +1,6 @@
 package org.chess.console.domain.move;
 
+import org.chess.console.domain.piece.PieceColor;
 import org.chess.console.domain.piece.PieceType;
 
 import java.time.Instant;
@@ -10,6 +11,7 @@ import java.time.Instant;
 public record MoveRecord(
         int turn,
         PieceType piece,
+        PieceColor color,
         Move move,
         boolean capture,
         boolean check,
@@ -20,7 +22,7 @@ public record MoveRecord(
         var captureMarker = capture ? "x" : "-";
         return "%d. %s%s%s%s".formatted(
                 turn,
-                piece.getSymbol(),
+                piece.getSymbol(color),
                 captureMarker,
                 move.to().notation(),
                 checkmate ? "#" : (check ? "+" : "")

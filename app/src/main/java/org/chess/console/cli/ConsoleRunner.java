@@ -89,10 +89,13 @@ public class ConsoleRunner {
                 output.println("Fehler: " + evaluation.message());
                 return;
             }
+            // Refresh currentGame to get updated state
+            currentGame = service.activeGame().orElseThrow();
             output.println("Zug erfolgreich: " + evaluation.outcome().notation());
             renderer.render(currentGame);
             if (evaluation.outcome().checkmate()) {
                 output.println("Schachmatt! " + evaluation.outcome().piece().color() + " gewinnt.");
+                output.println("Das Spiel ist beendet. Verwenden Sie 'restart' für eine neue Partie.");
             } else if (evaluation.outcome().check()) {
                 output.println("Schach!");
             }
@@ -112,8 +115,15 @@ public class ConsoleRunner {
     }
 
     private void handleResign(ResignCommand command) {
-        service.resign(command.color());
-        output.println("Spieler " + command.color() + " hat aufgegeben.");
+        try {
+            service.resign(command.color());
+            // Refresh currentGame to get updated state
+            currentGame = service.activeGame().orElseThrow();
+            output.println("Spieler " + command.color() + " hat aufgegeben.");
+            renderer.render(currentGame);
+        } catch (IllegalStateException ex) {
+            output.println("Fehler: " + ex.getMessage());
+        }
     }
 
     private void printHelp() {
@@ -130,6 +140,10 @@ public class ConsoleRunner {
     }
 
     private void handleHint() {
+        if (currentGame.isOver()) {
+            output.println("Das Spiel ist beendet. Keine Züge mehr möglich.");
+            return;
+        }
         hintService.suggestMove(currentGame)
                 .ifPresentOrElse(
                         move -> output.println("Vorschlag: " + move),

@@ -53,8 +53,18 @@ public class GameService {
         return evaluation;
     }
 
+    /**
+     * Handles player resignation.
+     * Validates that the game is still in progress before allowing resignation.
+     *
+     * @param color the color of the resigning player
+     * @throws IllegalStateException if the game is already over or no active game exists
+     */
     public void resign(PieceColor color) {
         Game game = activeGame().orElseThrow(() -> new IllegalStateException("Keine aktive Partie"));
+        if (game.isOver()) {
+            throw new IllegalStateException("Das Spiel ist bereits beendet. Verwenden Sie 'restart' für eine neue Partie.");
+        }
         turnManager.resign(game, color);
         repository.save(game);
     }
