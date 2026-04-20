@@ -1,0 +1,364 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amssymb}
+
+\geometry{
+  a4paper,
+  left=2.5cm,
+  right=2.5cm,
+  top=3cm,
+  bottom=3cm
+}
+
+% Section formatting
+\titleformat{\section}[block]{\large\bfseries}{Kapitel \thesection:}{0.5em}{}
+\titleformat{\subsection}[block]{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}[block]{\normalsize\bfseries}{\thesubsubsection}{0.5em}{}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% Custom colors / highlighting for placeholder text
+\usepackage{xcolor}
+\newcommand{\placeholder}[1]{\textcolor{gray}{[#1]}}
+
+
+% List settings
+\renewcommand{\labelitemiii}{$\blacksquare$}
+
+\setlist[itemize,1]{label=\textbullet, leftmargin=1.5em}
+\setlist[itemize,2]{label=\textopenbullet, leftmargin=1.5em}
+\setlist[itemize,3]{label=$\blacksquare$, leftmargin=1.5em}
+\setlist[itemize,4]{label=\textbullet, leftmargin=1.5em}
+
+\begin{document}
+
+% ============================================================
+% Title Page
+% ============================================================
+\begin{titlepage}
+    \centering
+    \vspace*{4cm}
+
+    {\LARGE\bfseries Programmentwurf \placeholder{Bezeichnung}\par}
+
+    \vspace{3cm}
+
+    \begin{tabular}{ll}
+        \textbf{Name:}           & \placeholder{Name, Vorname} \\[0.5em]
+        \textbf{Matrikelnummer:} & \placeholder{MNR}           \\[0.5em]
+        \textbf{Abgabedatum:}    & \placeholder{DATUM}
+    \end{tabular}
+\end{titlepage}
+
+% ============================================================
+% Allgemeine Anmerkungen
+% ============================================================
+\newpage
+\subsection*{Allgemeine Anmerkungen:}
+
+\begin{itemize}
+    \item es darf nicht auf andere Kapitel als Leistungsnachweis verwiesen werden
+          (z.\,B. in der Form \glqq{}XY wurde schon in Kapitel 2 behandelt, daher hier keine
+          Ausführung\grqq{})
+    \item alles muss in UTF-8 codiert sein (Text und Code)
+    \item sollten mündliche Aussagen den schriftlichen Aufgaben widersprechen, gelten die
+          schriftlichen Aufgaben (ggf.\ an Anpassung der schriftlichen Aufgaben erinnern!)
+    \item alles muss ins Repository (Code, Ausarbeitung und alles was damit zusammenhängt)
+    \item die Beispiele sollten wenn möglich vom aktuellen Stand genommen werden
+          \begin{itemize}
+              \item finden sich dort keine entsprechenden Beispiele, dürfen auch ältere Commits
+                    unter Verweis auf den Commit verwendet werden
+              \item Ausnahme: beim Kapitel \glqq{}Refactoring\grqq{} darf von vorne herein aus
+                    allen Ständen frei gewählt werden (mit Verweis auf den entsprechenden Commit)
+          \end{itemize}
+    \item falls verlangte Negativ-Beispiele nicht vorhanden sind, müssen entsprechend mehr
+          Positiv-Beispiele gebracht werden
+          \begin{itemize}
+              \item Achtung: werden im Code entsprechende Negativ-Beispiele gefunden, gibt es
+                    keine Punkte für die zusätzlichen Positiv-Beispiele
+              \item Beispiele
+                    \begin{itemize}
+                        \item \glqq{}Nennen Sie jeweils eine Klasse, die das SRP einhält bzw.\ verletzt.\grqq{}
+                              \begin{itemize}
+                                  \item Antwort: Es gibt keine Klasse, die SRP verletzt, daher hier 2 Klassen,
+                                        die SRP einhalten: [Klasse 1], [Klasse 2]
+                                  \item Bewertung: falls im Code tatsächlich keine Klasse das SRP verletzt:
+                                        volle Punktzahl ODER falls im Code mind.\ eine Klasse SRP verletzt:
+                                        halbe Punktzahl
+                              \end{itemize}
+                    \end{itemize}
+          \end{itemize}
+    \item verlangte Positiv-Beispiele müssen gebracht werden
+    \item Code-Beispiel = Code in das Dokument kopieren
+\end{itemize}
+
+% ============================================================
+% Kapitel 1: Einführung
+% ============================================================
+\section{Einführung}
+
+\subsection*{Übersicht über die Applikation}
+
+\placeholder{Was macht die Applikation? Wie funktioniert sie? Welches Problem löst sie/welchen Zweck hat sie?}
+
+
+\subsection*{Wie startet man die Applikation?}
+
+\placeholder{Wie startet man die Applikation? Welche Voraussetzungen werden benötigt? Schritt-für-Schritt-Anleitung}
+
+\subsection*{Wie testet man die Applikation?}
+
+\placeholder{Wie testet man die Applikation? Welche Voraussetzungen werden benötigt? Schritt-für-Schritt-Anleitung}
+
+% ============================================================
+% Kapitel 2: Clean Architecture
+% ============================================================
+\section{Clean Architecture}
+
+\subsection*{Was ist Clean Architecture?}
+
+\placeholder{allgemeine Beschreibung der Clean Architecture in eigenen Worten}
+
+\subsection*{Analyse der Dependency Rule}
+
+\placeholder{(1 Klasse, die die Dependency Rule einhält und eine Klasse, die die Dependency Rule verletzt);
+    jeweils UML der Klasse und Analyse der Abhängigkeiten in beide Richtungen (d.\,h., von wem hängt die Klasse
+    ab und wer hängt von der Klasse ab) in Bezug auf die Dependency Rule}
+
+\subsubsection*{Positiv-Beispiel: Dependency Rule}
+
+\subsubsection*{Negativ-Beispiel: Dependency Rule}
+
+\subsection*{Analyse der Schichten}
+
+\placeholder{jeweils 1 Klasse zu 2 unterschiedlichen Schichten der Clean-Architecture: jeweils UML der Klasse
+    (ggf.\ auch zusammenspielenden Klassen), Beschreibung der Aufgabe, Einordnung mit Begründung in die Clean-Architecture}
+
+\subsubsection*{Schicht: \placeholder{Name}}
+
+\subsubsection*{Schicht: \placeholder{Name}}
+
+% ============================================================
+% Kapitel 3: SOLID
+% ============================================================
+\section{SOLID}
+
+\subsection*{Analyse Single-Responsibility-Principle (SRP)}
+
+\placeholder{jeweils eine Klasse als positives und negatives Beispiel für SRP;
+    jeweils UML der Klasse und Beschreibung der Aufgabe bzw.\ der Aufgaben und möglicher Lösungsweg
+    des Negativ-Beispiels (inkl.\ UML)}
+
+\subsubsection*{Positiv-Beispiel}
+
+\subsubsection*{Negativ-Beispiel}
+
+\newpage
+
+\subsection*{Analyse Open-Closed-Principle (OCP)}
+
+\placeholder{jeweils eine Klasse als positives und negatives Beispiel für OCP;
+    jeweils UML der Klasse und Analyse mit Begründung, warum das OCP erfüllt/nicht erfüllt wurde –
+    falls erfüllt: warum hier sinnvoll/welches Problem gab es? Falls nicht erfüllt: wie könnte man
+    es lösen (inkl.\ UML)?}
+
+\subsubsection*{Positiv-Beispiel}
+
+\subsubsection*{Negativ-Beispiel}
+
+\bigskip
+
+\subsection*{Analyse Liskov-Substitution- (LSP), Interface-Segregation- (ISP),\\
+    Dependency-Inversion-Principle (DIP)}
+
+\placeholder{jeweils eine Klasse als positives und negatives Beispiel für entweder LSP oder ISP oder DIP);
+    jeweils UML der Klasse und Begründung, warum man hier das Prinzip erfüllt/nicht erfüllt wird}
+
+\smallskip
+\noindent\placeholder{Anm.: es darf nur ein Prinzip ausgewählt werden; es darf NICHT z.\,B.\ ein positives
+    Beispiel für LSP und ein negatives Beispiel für ISP genommen werden}
+
+\subsubsection*{Positiv-Beispiel}
+
+\subsubsection*{Negativ-Beispiel}
+
+% ============================================================
+% Kapitel 4: Weitere Prinzipien
+% ============================================================
+\section{Weitere Prinzipien}
+
+\subsection*{Analyse GRASP: Geringe Kopplung}
+
+\placeholder{jeweils eine bis jetzt noch nicht behandelte Klasse als positives und negatives Beispiel
+    geringer Kopplung; jeweils UML Diagramm mit zusammenspielenden Klassen, Aufgabenbeschreibung und
+    Begründung für die Umsetzung der geringen Kopplung bzw.\ Beschreibung, wie die Kopplung aufgelöst
+    werden kann}
+
+\subsubsection*{Positiv-Beispiel}
+
+\subsubsection*{Negativ-Beispiel}
+
+\bigskip
+
+\subsection*{Analyse GRASP: Hohe Kohäsion}
+
+\placeholder{eine Klasse als positives Beispiel hoher Kohäsion; UML Diagramm und Begründung, warum
+    die Kohäsion hoch ist}
+
+\subsection*{Don't Repeat Yourself (DRY)}
+
+\placeholder{ein Commit angeben, bei dem duplizierter Code/duplizierte Logik aufgelöst wurde;
+    Code-Beispiele (vorher/nachher); begründen und Auswirkung beschreiben}
+
+% ============================================================
+% Kapitel 5: Unit Tests
+% ============================================================
+\newpage
+\section{Unit Tests}
+
+\subsection*{10 Unit Tests}
+
+\placeholder{Nennung von 10 Unit-Tests und Beschreibung, was getestet wird}
+
+\bigskip
+\begin{tabularx}{\textwidth}{|l|X|l|}
+    \hline
+    \textbf{Unit Test} & \textbf{Beschreibung} & \textbf{Klasse\#Methode} \\
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+                       &                       &                          \\[1.2em]
+    \hline
+\end{tabularx}
+
+\bigskip
+
+\subsection*{ATRIP: Automatic}
+
+\placeholder{Begründung/Erläuterung, wie 'Automatic' realisiert wurde}
+
+\subsection*{ATRIP: Thorough}
+
+\placeholder{jeweils 1 positives und negatives Beispiel zu 'Thorough'; jeweils Code-Beispiel,
+    Analyse und Begründung, was professionell/nicht professionell ist}
+
+\subsection*{ATRIP: Professional}
+
+\placeholder{jeweils 1 positives und negatives Beispiel zu 'Professional'; jeweils Code-Beispiel,
+    Analyse und Begründung, was professionell/nicht professionell ist}
+
+\subsection*{Code Coverage}
+
+\placeholder{Code Coverage im Projekt analysieren und begründen}
+
+\subsection*{Fakes und Mocks}
+
+\placeholder{Analyse und Begründung des Einsatzes von 2 Fake/Mock-Objekten;
+    zusätzlich jeweils UML Diagramm der Klasse}
+
+% ============================================================
+% Kapitel 6: Domain Driven Design
+% ============================================================
+\newpage
+\section{Domain Driven Design}
+
+\subsection*{Ubiquitous Language}
+
+\placeholder{4 Beispiele für die Ubiquitous Language; jeweils Bezeichnung, Bedeutung und kurze
+    Begründung, warum es zur Ubiquitous Language gehört}
+
+\bigskip
+\begin{tabularx}{\textwidth}{|l|X|X|}
+    \hline
+    \textbf{Bezeichnung} & \textbf{Bedeutung} & \textbf{Begründung} \\
+    \hline
+                         &                    &                     \\[1.2em]
+    \hline
+                         &                    &                     \\[1.2em]
+    \hline
+                         &                    &                     \\[1.2em]
+    \hline
+                         &                    &                     \\[1.2em]
+    \hline
+\end{tabularx}
+
+\bigskip
+
+\subsection*{Entities}
+
+\placeholder{UML, Beschreibung und Begründung des Einsatzes einer Entity; falls keine Entity
+    vorhanden: ausführliche Begründung, warum es keines geben kann/hier nicht sinnvoll ist}
+
+\subsection*{Value Objects}
+
+\placeholder{UML, Beschreibung und Begründung des Einsatzes eines Value Objects; falls kein
+    Value Object vorhanden: ausführliche Begründung, warum es keines geben kann/hier nicht sinnvoll ist}
+
+\subsection*{Repositories}
+
+\placeholder{UML, Beschreibung und Begründung des Einsatzes eines Repositories; falls kein
+    Repository vorhanden: ausführliche Begründung, warum es keines geben kann/hier nicht sinnvoll ist}
+
+\subsection*{Aggregates}
+
+\placeholder{UML, Beschreibung und Begründung des Einsatzes eines Aggregates; falls kein
+    Aggregate vorhanden: ausführliche Begründung, warum es keines geben kann/hier nicht sinnvoll ist}
+
+% ============================================================
+% Kapitel 7: Refactoring
+% ============================================================
+\section{Refactoring}
+
+\subsection*{Code Smells}
+
+\placeholder{jeweils 1 Code-Beispiel zu 2 Code Smells aus der Vorlesung; jeweils Code-Beispiel
+    und einen möglichen Lösungsweg bzw.\ den genommenen Lösungsweg beschreiben (inkl.\ (Pseudo-)Code)}
+
+\subsection*{2 Refactorings}
+
+\placeholder{2 unterschiedliche Refactorings aus der Vorlesung anwenden, begründen, sowie UML
+    vorher/nachher liefern; jeweils auf die Commits verweisen}
+
+% ============================================================
+% Kapitel 8: Entwurfsmuster
+% ============================================================
+\section{Entwurfsmuster}
+
+\placeholder{2 unterschiedliche Entwurfsmuster aus der Vorlesung (oder nach Absprache auch andere)
+    jeweils sinnvoll einsetzen, begründen und UML-Diagramm}
+
+\subsection*{Entwurfsmuster: \placeholder{Name}}
+
+\subsection*{Entwurfsmuster: \placeholder{Name}}
+
+\end{document}
