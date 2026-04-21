@@ -14,6 +14,8 @@
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{amssymb}
+\usepackage[simplified]{pgf
+-umlcd}
 
 \geometry{
   a4paper,
@@ -105,6 +107,28 @@
     \item verlangte Positiv-Beispiele müssen gebracht werden
     \item Code-Beispiel = Code in das Dokument kopieren
 \end{itemize}
+
+\section{Testen von TeX}
+\subsection{Link zur Dokumentation vom UML-Package}
+https://ctan.uib.no/graphics/pgf/contrib/pgf-umlcd/pgf-umlcd-manual.pdf
+\subsection{Beispiel für UML-Diagramm}
+\begin {tikzpicture}
+\begin{class}[ text width =7 cm ]{ Class }{0 ,0}
+    \attribute{+ Public }
+    \attribute{\# Pr o te ct e d }
+    \attribute{ - Private }
+    \attribute{$\ sim $ Package }
+\end{class}
+\begin{class}[ text width =7 cm ]{ B a n k A c c o u n t }{0 , -3}
+    \attribute{+ owner : String }
+    \attribute{+ balance : Dollars }
+    \operation{+ deposit ( amount : Dollars ) }
+    \operation{+ w i t h d r a w a l ( amount : Dollars ) }
+    \operation {\# u p d a t e B a l a n c e ( n e w B a l a n c e : Dollars
+        ) }
+\end{class}
+\end{tikzpicture}
+
 
 % ============================================================
 % Kapitel 1: Einführung
